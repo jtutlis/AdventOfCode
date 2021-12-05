@@ -15,38 +15,35 @@ func Run(path string) {
 }
 
 type Line struct {
-	ax, ay, bx, by int16
+	ax, ay, bx, by int
 }
 
-func SolveFast(lines []Line, diagonals bool, print bool) {
-	// hitPoints := make(map[Point]int)
+func SolveFast(lines []Line, diagonals bool, print bool) int {
 	var hitPoints [990][991]uint8
 	var count int
-	var dx, dy int16
-	var x1, x2, y1, y2 int16
+	var dx, dy int
+	var x1, x2, y1, y2 int
+	r := true
 
 	for _, line := range lines {
-		x1, y1 = line.ax, line.ay
-		x2, y2 = line.bx, line.by
+		x1, y1, x2, y2 = line.ax, line.ay, line.bx, line.by
 		dx, dy = GetDelta(x1, x2), GetDelta(y1, y2)
 
-		if !diagonals && !(dx == 0 || dy == 0) {
+		if dx != 0 && dy != 0 && !diagonals {
 			continue
 		}
 
-		r := true
+		r = true
 		for r {
 			if x1 == x2 && y1 == y2 {
 				r = false
 			}
-			if hitPoints[x1][y1] > 0 {
-				if hitPoints[x1][y1] == 1 {
-					count++
-				}
-				hitPoints[x1][y1]++
 
-			} else {
+			if hitPoints[x1][y1] == 0 {
 				hitPoints[x1][y1] = 1
+			} else if hitPoints[x1][y1] == 1 {
+				count++
+				hitPoints[x1][y1] = 2
 			}
 			x1, y1 = x1+dx, y1+dy
 		}
@@ -59,9 +56,11 @@ func SolveFast(lines []Line, diagonals bool, print bool) {
 		}
 	}
 
+	return count
+
 }
 
-func GetDelta(a, b int16) int16 {
+func GetDelta(a, b int) int {
 	if a == b {
 		return 0
 	} else if a < b {
@@ -86,7 +85,7 @@ func GetLines(path string) []Line {
 		bx, _ := strconv.Atoi(xp2[0])
 		by, _ := strconv.Atoi(xp2[1])
 
-		line := Line{int16(ax), int16(ay), int16(bx), int16(by)}
+		line := Line{ax, ay, bx, by}
 		lines = append(lines, line)
 	}
 	return lines

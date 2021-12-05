@@ -14,3 +14,23 @@ func BenchmarkSolveFast(b *testing.B) {
 		SolveFast(lines, true, false)
 	}
 }
+
+func TestSolveFastPart2(t *testing.T) {
+	lines := GetLines("input")
+	got := SolveFast(lines, true, false)
+	want := 22116
+
+	if got != want {
+		t.Errorf("got %d, wanted %d", got, want)
+	}
+}
+
+func TestSolveFastPart1(t *testing.T) {
+	lines := GetLines("input")
+	got := SolveFast(lines, false, false)
+	want := 6225
+
+	if got != want {
+		t.Errorf("got %d, wanted %d", got, want)
+	}
+}
