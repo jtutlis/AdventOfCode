@@ -1,25 +1,24 @@
 package day05
 
 import (
+	"fmt"
 	"io/ioutil"
 	"strconv"
 	"strings"
 )
 
 func Run(path string) {
+	fmt.Println("~~~day 05~~~")
 	lines := GetLines(path)
-	// start := time.Now()
-	SolveFast(lines, false)
-	SolveFast(lines, true)
-	// duration := time.Since(start)
-	// fmt.Println("total time:", duration)
+	SolveFast(lines, false, true)
+	SolveFast(lines, true, true)
 }
 
 type Line struct {
 	ax, ay, bx, by int16
 }
 
-func SolveFast(lines []Line, diagonals bool) {
+func SolveFast(lines []Line, diagonals bool, print bool) {
 	// hitPoints := make(map[Point]int)
 	var hitPoints [990][991]uint8
 	var count int
@@ -52,12 +51,14 @@ func SolveFast(lines []Line, diagonals bool) {
 			x1, y1 = x1+dx, y1+dy
 		}
 	}
+	if print {
+		if diagonals {
+			fmt.Println("Part 2:", count)
+		} else {
+			fmt.Println("Part 1:", count)
+		}
+	}
 
-	// if diagonals {
-	// 	fmt.Println("Part 2:", count)
-	// } else {
-	// 	fmt.Println("Part 1:", count)
-	// }
 }
 
 func GetDelta(a, b int16) int16 {

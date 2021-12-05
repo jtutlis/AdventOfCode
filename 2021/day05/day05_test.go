@@ -11,6 +11,6 @@ func BenchmarkGetLines(b *testing.B) {
 func BenchmarkSolveFast(b *testing.B) {
 	lines := GetLines("input")
 	for n := 0; n < b.N; n++ {
-		SolveFast(lines, true)
+		SolveFast(lines, true, false)
 	}
 }
