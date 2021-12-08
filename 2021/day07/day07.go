@@ -17,20 +17,17 @@ func Run(path string) {
 }
 
 func SolvePart1(nums []int) int {
-
 	median := Median(nums)
 	var sum int
 	for _, n := range nums {
 		sum += AbsDiffInt(median, n)
 	}
-
 	return sum
 }
 
 func SolvePart2(nums []int) int {
 	mean := Mean(nums)
 	var sum int
-
 	for _, n := range nums {
 		sum += Summation(AbsDiffInt(mean, n))
 	}
